@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "core": "Core_o4",
+  "meta": "MetaLogos",
+  "glyphs": [],
+  "artifacts": [
+    "docs/index.html",
+    "docs/css/style.css",
+    "docs/js/init.js",
+    "docs/assets/om-symbol.svg",
+    "docs/coremap_with_links.svg"
+  ],
+  "publish": "gh-pages",
+  "status": "active",
+  "site_root": "docs",
+  "last_sync": null
+}
