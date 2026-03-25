@@ -1,0 +1,28 @@
+name: Validate Architecture Assets
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate-json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate JSON files
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          targets = [
+              Path('docs/architecture/keymatrix-master-blueprint.json'),
+              Path('docs/architecture/platform-contract.json'),
+              Path('system/module_registry.json')
+          ]
+          for path in targets:
+              with path.open('r', encoding='utf-8') as f:
+                  json.load(f)
+              print(f'validated: {path}')
+          PY
