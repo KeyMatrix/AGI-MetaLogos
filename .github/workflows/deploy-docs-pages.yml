@@ -1,0 +1,37 @@
+name: Deploy Docs Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Validate docs site root
+        run: |
+          test -f docs/index.html
+          test -f docs/css/style.css
+          test -f docs/js/init.js
+          test -f docs/assets/om-symbol.svg
+          test -f docs/coremap_with_links.svg
+
+      - name: Upload docs artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deploy
+        uses: actions/deploy-pages@v4
