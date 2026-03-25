@@ -1,0 +1,50 @@
+{
+  "registry_version": "1.0.0",
+  "modules": [
+    {
+      "id": "MetaCore",
+      "layer": "L1_core",
+      "owner_core": "KeyMatrix",
+      "depends_on": [],
+      "exports": ["reasoning", "coordination"],
+      "healthcheck": "/health/metacore",
+      "criticality": "high"
+    },
+    {
+      "id": "PrimeCore",
+      "layer": "L1_core",
+      "owner_core": "KeyMatrix",
+      "depends_on": ["MetaCore"],
+      "exports": ["optimization", "priority_engine"],
+      "healthcheck": "/health/primecore",
+      "criticality": "high"
+    },
+    {
+      "id": "MindState",
+      "layer": "L1_core",
+      "owner_core": "KeyMatrix",
+      "depends_on": ["MetaCore"],
+      "exports": ["context_state", "attention"],
+      "healthcheck": "/health/mindstate",
+      "criticality": "high"
+    },
+    {
+      "id": "Archivarius",
+      "layer": "L1_core",
+      "owner_core": "KeyMatrix",
+      "depends_on": ["MetaCore"],
+      "exports": ["memory", "archive"],
+      "healthcheck": "/health/archivarius",
+      "criticality": "high"
+    },
+    {
+      "id": "SyncCore",
+      "layer": "L2_runtime",
+      "owner_core": "KeyMatrix",
+      "depends_on": ["MetaCore", "PrimeCore", "MindState", "Archivarius"],
+      "exports": ["autosync", "event_routing"],
+      "healthcheck": "/health/synccore",
+      "criticality": "critical"
+    }
+  ]
+}
