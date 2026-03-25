@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "core": "Core_o4",
+  "meta": "MetaLogos",
+  "glyphs": [],
+  "artifacts": [],
+  "publish": "gh-pages",
+  "status": "active",
+  "last_sync": null
+}
