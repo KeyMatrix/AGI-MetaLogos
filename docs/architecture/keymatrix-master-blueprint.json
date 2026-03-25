@@ -1,0 +1,48 @@
+{
+  "manifest_id": "KeyMatrix_Master_Blueprint_vNext",
+  "version": "1.0.0",
+  "status": "proposed",
+  "source_of_truth": {
+    "primary_manifest": "system/keymatrix.master.manifest.json",
+    "module_registry": "system/module_registry.json",
+    "runtime_contract": "system/runtime_contract.json",
+    "docs_reference": "docs/architecture/keymatrix-master-blueprint.json"
+  },
+  "architecture": {
+    "planes": {
+      "control_plane": [
+        "routing",
+        "orchestration",
+        "telemetry",
+        "security_policy",
+        "manifest_management"
+      ],
+      "data_plane": [
+        "processing",
+        "analytics",
+        "storage",
+        "streaming",
+        "external_sync"
+      ]
+    },
+    "layers": {
+      "L1_core": ["MetaCore", "PrimeCore", "MindState", "Singularity", "Archivarius"],
+      "L2_runtime": ["SyncCore", "EventBus", "Scheduler", "HealthMonitor", "FeedbackLoop"],
+      "L3_capabilities": ["LucidMap", "QuantumEcho", "CymaticsBridge", "NeuroShell", "DreamWeave", "AetherNet"],
+      "L4_interfaces": ["WebUI", "OBS", "GitHub", "TelegramBot", "VoiceAI", "Dashboards"]
+    }
+  },
+  "optimization_priorities": [
+    "Consolidate manifests into one executable source of truth",
+    "Separate runtime config from documentation artifacts",
+    "Normalize module registry and dependencies",
+    "Reduce workflows to validate/build/deploy",
+    "Add structured observability and health endpoints",
+    "Isolate examples and archives from production paths"
+  ],
+  "delivery_policy": {
+    "main_branch": "protected",
+    "integration_branch_pattern": "infra/*",
+    "merge_policy": "pull_request_only"
+  }
+}
