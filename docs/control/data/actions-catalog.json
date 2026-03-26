@@ -1,0 +1,10 @@
+{
+  "actions": [
+    { "id": "health-check", "label": "Health Check", "scope": "ui", "effect": "Render current status and confirm canonical payload readiness." },
+    { "id": "sync-audit", "label": "Sync Audit", "scope": "ui", "effect": "Show synchronization and cleanup state summary from published snapshots." },
+    { "id": "open-docs", "label": "Open Docs Payload", "scope": "navigation", "effect": "Navigate to core docs payload and reference layer." },
+    { "id": "show-cleanup", "label": "Show Cleanup State", "scope": "ui", "effect": "Expose cleanup baseline and folder normalization status." },
+    { "id": "show-registry", "label": "Show Module Registry", "scope": "ui", "effect": "Display module registry snapshot loaded from published JSON." },
+    { "id": "show-canonical-paths", "label": "Canonical Paths", "scope": "ui", "effect": "Display the repository canonical zones after cleanup." }
+  ]
+}
