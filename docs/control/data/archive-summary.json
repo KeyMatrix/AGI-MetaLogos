@@ -1,0 +1,19 @@
+{
+  "workflow_archives": [
+    "archives/workflows/github_workflows_publish-gh-pages_Version2.yml",
+    "archives/workflows/github_workflows_python-app_Version4.yml"
+  ],
+  "package_archives": [
+    "archives/packages/KeyMatrix-main.zip",
+    "archives/packages/KeyMatrix_OmniSync_Core12.zip",
+    "archives/packages/KeyMatrix_OmniSync_MetaForge.zip",
+    "archives/packages/MetaBridge_OM.zip",
+    "archives/packages/TreeOM_Sync_Kit.zip",
+    "archives/packages/Quantum_PlazMatrix_Codespace (1).zip"
+  ],
+  "example_paths": [
+    "examples/deepglyph/deepglyph_panel.html",
+    "examples/web/web_interface.html",
+    "examples/integrations/metaforge/web_interface.html"
+  ]
+}
