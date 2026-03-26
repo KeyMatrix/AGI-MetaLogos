@@ -1,0 +1,5 @@
+{
+  "trigger": "pages-deploy",
+  "purpose": "Launch GitHub Pages deployment for KeyMatrix control center",
+  "timestamp": "2026-03-26T03:50:00Z"
+}
