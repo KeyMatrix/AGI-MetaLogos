@@ -1,0 +1,40 @@
+{
+  "registry_version": "1.0.0",
+  "modules": [
+    {
+      "id": "MetaCore",
+      "layer": "L1_core",
+      "owner_core": "KeyMatrix",
+      "exports": ["reasoning", "coordination"],
+      "criticality": "high"
+    },
+    {
+      "id": "PrimeCore",
+      "layer": "L1_core",
+      "owner_core": "KeyMatrix",
+      "exports": ["optimization", "priority_engine"],
+      "criticality": "high"
+    },
+    {
+      "id": "MindState",
+      "layer": "L1_core",
+      "owner_core": "KeyMatrix",
+      "exports": ["context_state", "attention"],
+      "criticality": "high"
+    },
+    {
+      "id": "Archivarius",
+      "layer": "L1_core",
+      "owner_core": "KeyMatrix",
+      "exports": ["memory", "archive"],
+      "criticality": "high"
+    },
+    {
+      "id": "SyncCore",
+      "layer": "L2_runtime",
+      "owner_core": "KeyMatrix",
+      "exports": ["autosync", "event_routing"],
+      "criticality": "critical"
+    }
+  ]
+}
