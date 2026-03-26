@@ -1,10 +1,24 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "core": "Core_o4",
   "meta": "MetaLogos",
-  "glyphs": [],
-  "artifacts": [],
+  "glyphs": [
+    "assets/om-symbol.svg",
+    "docs/assets/om-symbol.svg"
+  ],
+  "artifacts": [
+    "docs/index.html",
+    "docs/control/index.html",
+    "docs/control/v3/index.html",
+    "docs/control/data/module-registry.json",
+    "docs/control/data/config-summary.json",
+    "docs/control/data/archive-summary.json",
+    "docs/control/data/telemetry-history.json",
+    "docs/control/data/actions-catalog.json"
+  ],
   "publish": "gh-pages",
   "status": "active",
-  "last_sync": null
+  "last_sync": "managed-by-ci",
+  "site_root": "docs",
+  "generated_by": "generate_control_snapshots.py"
 }

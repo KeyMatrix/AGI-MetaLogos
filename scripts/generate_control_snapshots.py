@@ -27,8 +27,7 @@ def relpaths(paths):
 
 def build_module_registry():
     source = ROOT / 'system' / 'module_registry.json'
-    payload = load_json(source, {'registry_version': '0.0.0', 'modules': []})
-    return payload
+    return load_json(source, {'registry_version': '0.0.0', 'modules': []})
 
 
 def build_config_summary():
@@ -68,40 +67,22 @@ def build_telemetry_history(mode: str):
     registry = build_module_registry()
     config_summary = build_config_summary()
     archive_summary = build_archive_summary()
+    now = datetime.now(timezone.utc).isoformat()
 
     sha = os.getenv('GITHUB_SHA', 'local')
     ref = os.getenv('GITHUB_REF_NAME', 'local')
 
     events = [
-        {
-            'timestamp': datetime.now(timezone.utc).isoformat(),
-            'level': 'info',
-            'message': f'control snapshots generated in {mode} mode',
-        },
-        {
-            'timestamp': datetime.now(timezone.utc).isoformat(),
-            'level': 'info',
-            'message': f'module count: {len(registry.get("modules", []))}',
-        },
-        {
-            'timestamp': datetime.now(timezone.utc).isoformat(),
-            'level': 'info',
-            'message': f'config paths: {len(config_summary.get("config_paths", []))}',
-        },
-        {
-            'timestamp': datetime.now(timezone.utc).isoformat(),
-            'level': 'info',
-            'message': f'package archives: {len(archive_summary.get("package_archives", []))}',
-        },
+        {'timestamp': now, 'level': 'info', 'message': f'control snapshots generated in {mode} mode'},
+        {'timestamp': now, 'level': 'info', 'message': f'module count: {len(registry.get("modules", []))}'},
+        {'timestamp': now, 'level': 'info', 'message': f'config paths: {len(config_summary.get("config_paths", []))}'},
+        {'timestamp': now, 'level': 'info', 'message': f'package archives: {len(archive_summary.get("package_archives", []))}'},
     ]
 
     return {
         'heartbeat': '963Hz_primary / 786Hz_secondary',
         'deployment_state': f'{mode}-generated',
-        'git': {
-            'sha': sha,
-            'ref': ref,
-        },
+        'git': {'sha': sha, 'ref': ref},
         'events': events,
     }
 
@@ -109,43 +90,47 @@ def build_telemetry_history(mode: str):
 def build_actions_catalog():
     return {
         'actions': [
-            {
-                'id': 'health-check',
-                'label': 'Health Check',
-                'scope': 'ui',
-                'effect': 'Render current status and confirm canonical payload readiness.',
-            },
-            {
-                'id': 'sync-audit',
-                'label': 'Sync Audit',
-                'scope': 'ui',
-                'effect': 'Show synchronization and cleanup state summary from generated snapshots.',
-            },
-            {
-                'id': 'open-docs',
-                'label': 'Open Docs Payload',
-                'scope': 'navigation',
-                'effect': 'Navigate to the public docs payload and reference layer.',
-            },
-            {
-                'id': 'show-cleanup',
-                'label': 'Show Cleanup State',
-                'scope': 'ui',
-                'effect': 'Expose cleanup baseline and folder normalization status.',
-            },
-            {
-                'id': 'show-registry',
-                'label': 'Show Module Registry',
-                'scope': 'ui',
-                'effect': 'Display module registry snapshot loaded from generated JSON.',
-            },
-            {
-                'id': 'show-canonical-paths',
-                'label': 'Canonical Paths',
-                'scope': 'ui',
-                'effect': 'Display the repository canonical zones after cleanup.',
-            },
+            {'id': 'health-check', 'label': 'Health Check', 'scope': 'ui', 'effect': 'Render current status and confirm canonical payload readiness.'},
+            {'id': 'sync-audit', 'label': 'Sync Audit', 'scope': 'ui', 'effect': 'Show synchronization and cleanup state summary from generated snapshots.'},
+            {'id': 'open-docs', 'label': 'Open Docs Payload', 'scope': 'navigation', 'effect': 'Navigate to the public docs payload and reference layer.'},
+            {'id': 'show-cleanup', 'label': 'Show Cleanup State', 'scope': 'ui', 'effect': 'Expose cleanup baseline and folder normalization status.'},
+            {'id': 'show-registry', 'label': 'Show Module Registry', 'scope': 'ui', 'effect': 'Display module registry snapshot loaded from generated JSON.'},
+            {'id': 'show-canonical-paths', 'label': 'Canonical Paths', 'scope': 'ui', 'effect': 'Display the repository canonical zones after cleanup.'},
         ]
+    }
+
+
+def build_artifact_sync(mode: str):
+    now = datetime.now(timezone.utc).isoformat()
+    glyph_candidates = [
+        ROOT / 'assets' / 'om-symbol.svg',
+        ROOT / 'docs' / 'assets' / 'om-symbol.svg',
+    ]
+    glyphs = relpaths([p for p in glyph_candidates if p.exists()])
+
+    artifact_candidates = [
+        ROOT / 'docs' / 'index.html',
+        ROOT / 'docs' / 'control' / 'index.html',
+        ROOT / 'docs' / 'control' / 'v3' / 'index.html',
+        ROOT / 'docs' / 'control' / 'data' / 'module-registry.json',
+        ROOT / 'docs' / 'control' / 'data' / 'config-summary.json',
+        ROOT / 'docs' / 'control' / 'data' / 'archive-summary.json',
+        ROOT / 'docs' / 'control' / 'data' / 'telemetry-history.json',
+        ROOT / 'docs' / 'control' / 'data' / 'actions-catalog.json',
+    ]
+    artifacts = relpaths([p for p in artifact_candidates if p.exists()])
+
+    return {
+        'version': '1.1.0',
+        'core': 'Core_o4',
+        'meta': 'MetaLogos',
+        'glyphs': glyphs,
+        'artifacts': artifacts,
+        'publish': 'gh-pages',
+        'status': 'active',
+        'last_sync': now,
+        'site_root': 'docs',
+        'generated_by': f'generate_control_snapshots.py::{mode}',
     }
 
 
@@ -155,6 +140,7 @@ def generate(mode: str):
     write_json(DATA_DIR / 'archive-summary.json', build_archive_summary())
     write_json(DATA_DIR / 'telemetry-history.json', build_telemetry_history(mode))
     write_json(DATA_DIR / 'actions-catalog.json', build_actions_catalog())
+    write_json(ROOT / 'artifact_sync.json', build_artifact_sync(mode))
 
 
 def main():
