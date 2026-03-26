@@ -1,0 +1,12 @@
+{
+  "site_root": "docs",
+  "publish": "gh-pages",
+  "config_paths": [
+    "config/artifact_sync.json",
+    "config/awakening-seed.json",
+    "config/flow.json",
+    "config/legacy/artifact_sync_Version2.json",
+    "config/legacy/Met1.json",
+    "config/legacy/OM_Gate_Core_v3.json"
+  ]
+}
