@@ -21,9 +21,18 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install validation dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install jsonschema
+
       - name: Generate control snapshots
         run: |
           python scripts/generate_control_snapshots.py --mode validate
+
+      - name: Validate artifact sync schema
+        run: |
+          python scripts/validate_artifact_sync.py
 
       - name: Validate JSON manifests
         run: |
