@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keymatrix.github.io/AGI-MetaLogos/schemas/artifact_sync.schema.json",
+  "title": "artifact_sync",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "core",
+    "meta",
+    "glyphs",
+    "artifacts",
+    "publish",
+    "status",
+    "last_sync"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "core": {
+      "type": "string",
+      "minLength": 1
+    },
+    "meta": {
+      "type": "string",
+      "minLength": 1
+    },
+    "glyphs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "publish": {
+      "type": "string",
+      "enum": ["gh-pages"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "inactive"]
+    },
+    "last_sync": {
+      "type": "string",
+      "minLength": 1
+    },
+    "site_root": {
+      "type": "string"
+    },
+    "generated_by": {
+      "type": "string"
+    }
+  }
+}
