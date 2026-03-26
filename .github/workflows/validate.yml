@@ -21,9 +21,13 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Generate control snapshots
+        run: |
+          python scripts/generate_control_snapshots.py --mode validate
+
       - name: Validate JSON manifests
         run: |
-          node -e "JSON.parse(require('fs').readFileSync('artifact_sync.json', 'utf8')); JSON.parse(require('fs').readFileSync('docs/architecture/keymatrix-master-blueprint.json', 'utf8')); JSON.parse(require('fs').readFileSync('docs/architecture/platform-contract.json', 'utf8')); JSON.parse(require('fs').readFileSync('system/module_registry.json', 'utf8')); console.log('json validation ok')"
+          node -e "JSON.parse(require('fs').readFileSync('artifact_sync.json', 'utf8')); JSON.parse(require('fs').readFileSync('docs/architecture/keymatrix-master-blueprint.json', 'utf8')); JSON.parse(require('fs').readFileSync('docs/architecture/platform-contract.json', 'utf8')); JSON.parse(require('fs').readFileSync('system/module_registry.json', 'utf8')); JSON.parse(require('fs').readFileSync('docs/control/data/module-registry.json', 'utf8')); JSON.parse(require('fs').readFileSync('docs/control/data/config-summary.json', 'utf8')); JSON.parse(require('fs').readFileSync('docs/control/data/archive-summary.json', 'utf8')); JSON.parse(require('fs').readFileSync('docs/control/data/telemetry-history.json', 'utf8')); JSON.parse(require('fs').readFileSync('docs/control/data/actions-catalog.json', 'utf8')); console.log('json validation ok')"
 
       - name: Check canonical docs paths
         run: |
@@ -32,9 +36,17 @@ jobs:
           test -f docs/js/init.js
           test -f docs/assets/om-symbol.svg
           test -f docs/coremap_with_links.svg
+          test -f docs/control/index.html
+          test -f docs/control/v3/index.html
 
       - name: Check normalized config paths
         run: |
           test -f config/artifact_sync.json || true
           test -f config/awakening-seed.json || true
           test -f config/flow.json || true
+
+      - name: Upload generated control snapshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: control-snapshots-validate
+          path: docs/control/data/*.json
