@@ -12,12 +12,13 @@
     <div>
       <p class="eyebrow">KeyMatrix · Control Interface</p>
       <h1>Панель управления и взаимодействия с системой</h1>
-      <p class="subtitle">Единая точка контроля для ядер, модулей, конфигов, документации и cleanup-контура.</p>
+      <p class="subtitle">Единая точка контроля для ядер, модулей, конфигов, документации, архивов и cleanup-контура.</p>
     </div>
     <nav class="hero-actions">
       <a class="button primary" href="../index.html">Главный портал</a>
       <a class="button" href="../architecture/keymatrix-master-blueprint.json">Blueprint</a>
       <a class="button" href="../reference/keymatrix_sync.md">Protocol</a>
+      <a class="button" href="./data/module-registry.json">Registry Snapshot</a>
     </nav>
   </header>
 
@@ -61,6 +62,30 @@
       <div id="zones-list" class="zone-list"></div>
     </section>
 
+    <section class="card registry-card">
+      <div class="card-header">
+        <h2>Registry snapshot</h2>
+        <span class="muted">docs/control/data/module-registry.json</span>
+      </div>
+      <div id="registry-summary" class="summary-grid"></div>
+    </section>
+
+    <section class="card config-card">
+      <div class="card-header">
+        <h2>Config snapshot</h2>
+        <span class="muted">docs/control/data/config-summary.json</span>
+      </div>
+      <div id="config-summary" class="summary-grid"></div>
+    </section>
+
+    <section class="card archive-card">
+      <div class="card-header">
+        <h2>Archive snapshot</h2>
+        <span class="muted">docs/control/data/archive-summary.json</span>
+      </div>
+      <div id="archive-summary" class="summary-grid"></div>
+    </section>
+
     <section class="card logs-card">
       <div class="card-header">
         <h2>Журнал взаимодействия</h2>
@@ -79,6 +104,7 @@
         <li><a href="../reference/coremap.svg">Reference Coremap</a></li>
         <li><a href="../reference/keymatrix_sync.md">OmniSync Protocol</a></li>
         <li><a href="../assets/om-symbol.svg">OM Symbol</a></li>
+        <li><a href="../../examples/integrations/metaforge/web_interface.html">MetaForge Example</a></li>
       </ul>
     </section>
   </main>

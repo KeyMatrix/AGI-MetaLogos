@@ -27,25 +27,29 @@ const zones = [
 function createBlock(className, title, body, extra) {
   const item = document.createElement('div');
   item.className = className;
-
   const head = document.createElement('div');
-  head.className = className.indexOf('status') >= 0 ? 'status-label' : className.indexOf('module') >= 0 ? 'module-title' : 'zone-title';
+  head.className = className.indexOf('status') >= 0 ? 'status-label' : className.indexOf('module') >= 0 ? 'module-title' : className.indexOf('zone') >= 0 ? 'zone-title' : 'summary-title';
   head.textContent = title;
-
   const main = document.createElement('div');
+  main.className = className.indexOf('summary') >= 0 ? 'summary-value' : '';
   main.textContent = body;
-
   item.appendChild(head);
   item.appendChild(main);
-
   if (extra) {
     const extraNode = document.createElement('div');
     extraNode.className = 'muted';
     extraNode.textContent = extra;
     item.appendChild(extraNode);
   }
-
   return item;
+}
+
+async function loadJson(path) {
+  const response = await fetch(path);
+  if (!response.ok) {
+    throw new Error('failed to load ' + path);
+  }
+  return response.json();
 }
 
 function renderStatus() {
@@ -70,6 +74,14 @@ function renderZones() {
   });
 }
 
+function renderSummary(targetId, entries) {
+  const node = document.getElementById(targetId);
+  node.innerHTML = '';
+  entries.forEach((entry) => {
+    node.appendChild(createBlock('summary-item', entry.title, entry.value, entry.extra));
+  });
+}
+
 function appendLog(lines) {
   const output = document.getElementById('log-output');
   const stamp = new Date().toLocaleTimeString();
@@ -83,7 +95,7 @@ function handleAction(action) {
     'sync-audit': ['sync-audit :: completed', 'active canonical paths :: docs / src / config / examples / archives'],
     'open-docs': ['docs payload includes:', 'docs/index.html', 'docs/control/index.html', 'docs/reference/keymatrix_sync.md'],
     'show-cleanup': ['cleanup state :: applied', 'legacy workflow assets :: removed', 'duplicate module folders :: normalized'],
-    'show-registry': ['registry snapshot:', 'MetaCore', 'PrimeCore', 'MindState', 'Archivarius', 'SyncCore'],
+    'show-registry': ['registry snapshot loaded from docs/control/data/module-registry.json'],
     'show-canonical-paths': ['canonical paths:', 'docs/', 'src/', 'config/', 'examples/', 'archives/']
   };
   appendLog(map[action] || ['unknown action: ' + action]);
@@ -96,10 +108,40 @@ function wireActions() {
   });
 }
 
+async function bootSnapshots() {
+  try {
+    const registry = await loadJson('./data/module-registry.json');
+    renderSummary('registry-summary', [
+      { title: 'registry_version', value: registry.registry_version || 'n/a' },
+      { title: 'modules', value: String((registry.modules || []).length) },
+      { title: 'critical modules', value: String((registry.modules || []).filter((m) => m.criticality === 'critical').length) }
+    ]);
+
+    const config = await loadJson('./data/config-summary.json');
+    renderSummary('config-summary', [
+      { title: 'site_root', value: config.site_root },
+      { title: 'publish', value: config.publish },
+      { title: 'active configs', value: String(config.config_paths.length) }
+    ]);
+
+    const archives = await loadJson('./data/archive-summary.json');
+    renderSummary('archive-summary', [
+      { title: 'workflow archives', value: String(archives.workflow_archives.length) },
+      { title: 'package archives', value: String(archives.package_archives.length) },
+      { title: 'examples', value: String(archives.example_paths.length) }
+    ]);
+
+    appendLog(['snapshot boot :: registry / config / archive loaded']);
+  } catch (error) {
+    appendLog(['snapshot boot :: error', error.message]);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   renderStatus();
   renderModules();
   renderZones();
   wireActions();
   appendLog(['system-control-interface :: ready']);
+  bootSnapshots();
 });

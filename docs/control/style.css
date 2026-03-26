@@ -112,6 +112,9 @@ h1 {
 .actions-card { grid-column: span 6; }
 .modules-card { grid-column: span 6; }
 .topology-card { grid-column: span 6; }
+.registry-card { grid-column: span 4; }
+.config-card { grid-column: span 4; }
+.archive-card { grid-column: span 4; }
 .logs-card { grid-column: span 8; }
 .quicklinks-card { grid-column: span 4; }
 
@@ -121,20 +124,20 @@ h1 {
   gap: 12px;
 }
 
-.status-item, .zone-item, .module-item {
+.status-item, .zone-item, .module-item, .summary-item {
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 14px;
   background: rgba(15,23,42,0.55);
 }
 
-.status-label, .zone-title, .module-title {
+.status-label, .zone-title, .module-title, .summary-title {
   font-size: .82rem;
   color: var(--muted);
   margin-bottom: 8px;
 }
 
-.status-value {
+.status-value, .summary-value {
   font-size: 1rem;
   font-weight: 700;
 }
@@ -156,7 +159,7 @@ h1 {
 }
 
 .action-button:hover { border-color: rgba(56, 189, 248, 0.4); }
-.module-list, .zone-list {
+.module-list, .zone-list, .summary-grid {
   display: grid;
   gap: 12px;
 }
@@ -180,7 +183,7 @@ h1 {
 .quicklinks a { color: #bae6fd; }
 
 @media (max-width: 980px) {
-  .status-card, .actions-card, .modules-card, .topology-card, .logs-card, .quicklinks-card {
+  .status-card, .actions-card, .modules-card, .topology-card, .registry-card, .config-card, .archive-card, .logs-card, .quicklinks-card {
     grid-column: 1 / -1;
   }
 }
