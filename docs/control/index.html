@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KeyMatrix Control Interface</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">KeyMatrix · Control Interface</p>
+      <h1>Панель управления и взаимодействия с системой</h1>
+      <p class="subtitle">Единая точка контроля для ядер, модулей, конфигов, документации и cleanup-контура.</p>
+    </div>
+    <nav class="hero-actions">
+      <a class="button primary" href="../index.html">Главный портал</a>
+      <a class="button" href="../architecture/keymatrix-master-blueprint.json">Blueprint</a>
+      <a class="button" href="../reference/keymatrix_sync.md">Protocol</a>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <section class="card status-card">
+      <div class="card-header">
+        <h2>Состояние системы</h2>
+        <span id="system-badge" class="badge">Initializing</span>
+      </div>
+      <div class="status-grid" id="status-grid"></div>
+    </section>
+
+    <section class="card actions-card">
+      <div class="card-header">
+        <h2>Операции</h2>
+        <span class="muted">Безопасные UI-команды</span>
+      </div>
+      <div class="action-grid">
+        <button class="action-button" data-action="health-check">Health Check</button>
+        <button class="action-button" data-action="sync-audit">Sync Audit</button>
+        <button class="action-button" data-action="open-docs">Open Docs Payload</button>
+        <button class="action-button" data-action="show-cleanup">Show Cleanup State</button>
+        <button class="action-button" data-action="show-registry">Show Module Registry</button>
+        <button class="action-button" data-action="show-canonical-paths">Canonical Paths</button>
+      </div>
+    </section>
+
+    <section class="card modules-card">
+      <div class="card-header">
+        <h2>Ключевые модули</h2>
+        <span class="muted">Нормализованный активный слой</span>
+      </div>
+      <div id="modules-list" class="module-list"></div>
+    </section>
+
+    <section class="card topology-card">
+      <div class="card-header">
+        <h2>Канонические зоны</h2>
+        <span class="muted">После cleanup и normalisation</span>
+      </div>
+      <div id="zones-list" class="zone-list"></div>
+    </section>
+
+    <section class="card logs-card">
+      <div class="card-header">
+        <h2>Журнал взаимодействия</h2>
+        <span class="muted">UI telemetry</span>
+      </div>
+      <div id="log-output" class="log-output"></div>
+    </section>
+
+    <section class="card quicklinks-card">
+      <div class="card-header">
+        <h2>Быстрые переходы</h2>
+        <span class="muted">Документация, примеры, архивы</span>
+      </div>
+      <ul class="quicklinks">
+        <li><a href="../guides/MetaDevConfig.md">MetaDev Guide</a></li>
+        <li><a href="../reference/coremap.svg">Reference Coremap</a></li>
+        <li><a href="../reference/keymatrix_sync.md">OmniSync Protocol</a></li>
+        <li><a href="../assets/om-symbol.svg">OM Symbol</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
